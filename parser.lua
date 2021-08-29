@@ -22,8 +22,8 @@ If the next item in the program is a number, the function expects a number as we
 --#region TokenDefinitions
 tokenType = {
 	space = 0, --0 and 1 for easy binary-nes
-	tab = 1,
-	linefeed = 2
+	tab = 1, --If these are changed, anarchy will ensue
+	linefeed = 2 --This one too
 }
 
 SPACE = tokenType.space;
@@ -40,8 +40,8 @@ lookupTable[string.byte(" ")] = tokenType.space;
 lookupTable[string.byte("	")] = tokenType.tab;
 lookupTable[string.byte("\n")] = tokenType.linefeed;
 
---Mostly used with the following tables
-local function argsToCommand(...)
+--Turns argsToCommand(SPACE, SPACE) into "00", entirely here for convenience
+function argsToCommand(...)
 	local tab = {...};
 	local ret = "";
 	for i, v in pairs(tab) do
@@ -110,9 +110,10 @@ local function getNumber(str, index)
 	return binaryStringToInt(sign .. number), index + 1;
 end
 
+local module = {};
 
 --Parse the input file (in whitespace)
-local function parse(filename)
+function module.parse(filename)
 	--Array of stuff to return
 	local output = {};
 	--Array of labels
@@ -164,9 +165,5 @@ local function parse(filename)
 	file:close();
 	return output, labels;
 end
-local output, labels = parse("test.ws");
-print(#labels)
 
-for i,v in pairs(labels) do
-	print(v);
-end
+return module;
