@@ -6,11 +6,9 @@ Program:
 	"01201", "012010", 234, "0112"
 }
 The commands are encoded according to the SPACE, LF, and TAB constants, if an instruction needs a number after it, it'll be there
-If an instruction uses a label, it will be there in number form, check the 'label number' for each entry in Labels
+If an instruction uses a label, it will be there in number form, check the 'label number' for where the pc should be
 Labels:
-{
-	{idx of command in program, label number (identifier)}, {idx, num}
-}
+Labels[labelNumber] = newProgramcounter
 ]]
 
 --#region TokenDefinitions
@@ -142,7 +140,8 @@ function module.parse(filename)
 					num, q = getNumber(text, q + 1);
 					--If just a label definition
 					if currentAction == labelDefAction then
-						labels[#labels+1] = {#output + 1, num}
+						--Set this label to point to the next instruction
+						labels[num] = #output + 1;
 					else --We do something with the label
 						output[#output+1] = currentAction;
 						output[#output+1] = num;
