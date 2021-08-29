@@ -11,12 +11,6 @@ Labels:
 {
 	{idx of command in program, label number (identifier)}, {idx, num}
 }
-
-Every function in the program expects it's first parameter to be state, a table with:
-state.stack
-state.heap
-
-If the next item in the program is a number, the function expects a number as well
 ]]
 
 --#region TokenDefinitions
