@@ -101,7 +101,7 @@ local function getNumber(str, index)
 			sign = "-";
 		end
 	end
-	return binaryStringToInt(sign .. number), index + 1;
+	return binaryStringToInt(sign .. number), index;
 end
 
 local module = {};
