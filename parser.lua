@@ -105,6 +105,7 @@ end
 local module = {};
 
 --Parse the input file (in whitespace)
+--Returns a "program" and a list of labels
 function module.parse(filename)
 	--Array of stuff to return
 	local output = {};
@@ -157,6 +158,23 @@ function module.parse(filename)
 	end
 	file:close();
 	return output, labels;
+end
+
+--Removes all non-LF, TAB, ans SPACE chars from the infile
+--and writes the output to outFile
+function module.removeComments(inFilename, outFilename)
+	local inFile = io.open(inFilename, "r");
+	local outFile = io.open(outFilename, "w");
+
+	local text = inFile:read("*a");
+	for q = 1, text:len() do
+		local token = lookupTable[text:sub(q,q):byte()];
+		if token then
+			outFile:write(text:sub(q,q));
+		end
+	end
+	inFile:close();
+	outFile:close();
 end
 
 return module;
